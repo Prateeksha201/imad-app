@@ -5,6 +5,11 @@ element.innerHTML='hi!im samhitha. this is my first webapp';
 //to move img
 var img=documnet.getElementById('madi');
 var marginLeft=0;
+function moveRight()
+{
+    marginLeft= marginLeft +10;
+    img.style.marginLeft= marginLeft +'px';
+}
 img.onclick=function() {
-    img.style.marginLeft='100px';
+    var inteval= setInterval(moeRight,100);
 };
