@@ -161,7 +161,32 @@ app.post('/create_user',function(req,res){
     });
 });
 
-
+app.post('/logon',function(req,res){
+     var username=req.body.username;
+    var password= req.body.password;
+    pool.query('SELECT * FROM "user" username=$1,$2)',[username],function(err,res){
+        if(err){
+            res.status(500).send(err,toString());
+        }
+        else{
+            if(result.rows.length===0){
+                res.send(403).send('username or password is invalid');
+            }
+            else{
+                //match the password 1.extract from database
+                var dbString=res.rows[0].password;
+                var salt= dbString.split('$')[2];
+                hashedPassword=hash(password,salt);//creating a hash based on the password submitted n the original salt
+                if(hashedPassword===dbString){
+                        res.send('credentials correct');
+                }else{
+                     res.send(403).send('username or password is invalid');
+                }
+            }
+        } 
+    });
+    
+});//here it doesnt insert into to the table but fetches from the table 
 
 
 
