@@ -164,7 +164,7 @@ app.post('/create_user',function(req,res){
 app.post('/logon',function(req,res){
      var username=req.body.username;
     var password= req.body.password;
-    pool.query('SELECT * FROM "user" username=$1,$2)',[username],function(err,res){
+    pool.query('SELECT * FROM "user" WHERE username=$1,$2)',[username],function(err,res){
         if(err){
             res.status(500).send(err,toString());
         }
