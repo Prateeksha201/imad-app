@@ -156,7 +156,7 @@ app.post('/create_user',function(req,res){
             res.status(500).send(err,toString());
         }
         else{
-        re.send('user successfully created:'+username);
+        res.send('user successfully created:'+username);
         } 
     });
 });
