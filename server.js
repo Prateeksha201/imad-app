@@ -4,6 +4,7 @@ var path = require('path');
 var Pool=require('pg').Pool;
 var crypto= require('crypto');
 var bodyParser=require('body-parser');
+var session= require('express-session');
 
 var config={
     user:'samhithasetty',
@@ -17,6 +18,10 @@ var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());//
 /*to say that fr every incoming request if it sees a content type of json it uses that n sets req.body*/
+app.use(session({
+    secret:'someRandomSecretValue',
+    cookie:{maxAge: 1000 * 60 * 60 * 24 * 30}
+}));
 
 var article={
     
@@ -178,8 +183,15 @@ app.post('/logon',function(req,res){
                 var salt= dbString.split('$')[2];
                 hashedPassword=hash(password,salt);//creating a hash based on the password submitted n the original salt
                 if(hashedPassword===dbString){
-                        res.send('credentials correct');
-                        //set a session
+                     //set a session
+                     req.session.auth={userId:result.rows[0].id};
+                     //set a cookie with session-id
+                     //internally ,on the server side it maps the session id to an object
+                     // this object contains {auth:{userId}}
+                     
+                     
+                     
+                    res.send('credentials correct');
                 }
                 else{
                      res.send(403).send('username or password is invalid');
@@ -191,9 +203,19 @@ app.post('/logon',function(req,res){
 });//here it doesnt insert into to the table but fetches from the table 
 
 
+app.get('/check-login',function(req,res){
+    if(req.session&& req.session.auth && req.session.auth.userId){
+        res.send('you are logged in :' +req.session.auth.userId.toString());
+    }
+    else{
+        res.send('you are not logged in');
+    }
+});
 
-
-
+app.get('/logout', function(req,res){
+   delete req.session.auth;
+   re.send('Logged out');
+});
 
 
 
