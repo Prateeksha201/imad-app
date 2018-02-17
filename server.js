@@ -41,7 +41,7 @@ var article={
             </p>`
 },
     'article-two':{
-          title: 'article two|samhithasetty',
+          title: 'article two|prateeksha',
     heading:'article two',
     date:'sep 15,2017',
     content:`
@@ -50,7 +50,7 @@ var article={
             </p>
            `
     },
-    'article-three':{  title: 'article three|samhithasetty',
+    'article-three':{  title: 'article three|prateeksha',
     heading:'article three',
     date:'sep 25,2017',
     content:`
