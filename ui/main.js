@@ -1,7 +1,7 @@
 /*console.log('Loaded!');
 //to change the content
 var element=document.getElementById('xyz');
-element.innerHTML='hi!im samhitha. this is my first webapp';
+element.innerHTML='hi!im prateeksha. this is my first webapp';
 //to move img
 var img=document.getElementById('madi');
 var marginLeft=0;
